@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Metric Ruler Builder</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="site-shell">
+      <section class="panel hero-panel">
+        <div>
+          <p class="eyebrow">3D Print Ready</p>
+          <h1>Metric Ruler Builder</h1>
+          <p class="intro">
+            Build a simple ruler for 3D printing by entering the size in
+            centimeters, choosing <code>0.5 cm</code> or <code>1 cm</code>
+            markings, and downloading either a direct STL file or the matching
+            OpenSCAD model.
+          </p>
+        </div>
+
+        <div class="hero-chips" aria-label="Project highlights">
+          <span>Metric input</span>
+          <span>Live preview</span>
+          <span>Rounded corners</span>
+          <span>Raised numbers</span>
+          <span>Direct STL export</span>
+          <span>OpenSCAD export</span>
+          <span>GitHub Pages ready</span>
+        </div>
+      </section>
+
+      <section class="layout-grid">
+        <section class="panel form-panel">
+          <div class="section-heading">
+            <h2>Ruler Settings</h2>
+            <p>Enter the full ruler size in centimeters.</p>
+          </div>
+
+          <form id="rulerForm" class="ruler-form">
+            <label>
+              Length (cm)
+              <input
+                id="lengthCm"
+                name="lengthCm"
+                type="number"
+                min="1"
+                max="250"
+                step="0.1"
+                value="20"
+                required
+              />
+            </label>
+
+            <label>
+              Width (cm)
+              <input
+                id="widthCm"
+                name="widthCm"
+                type="number"
+                min="1"
+                max="30"
+                step="0.1"
+                value="3"
+                required
+              />
+            </label>
+
+            <label>
+              Depth (cm)
+              <input
+                id="depthCm"
+                name="depthCm"
+                type="number"
+                min="0.2"
+                max="5"
+                step="0.1"
+                value="0.4"
+                required
+              />
+            </label>
+
+            <fieldset class="precision-fieldset">
+              <legend>Marking precision</legend>
+
+              <label class="radio-pill">
+                <input type="radio" name="precision" value="0.5" checked />
+                <span>0.5 cm</span>
+              </label>
+
+              <label class="radio-pill">
+                <input type="radio" name="precision" value="1" />
+                <span>1 cm</span>
+              </label>
+            </fieldset>
+
+            <div class="action-row">
+              <button type="submit" class="primary-button">Update Preview</button>
+              <button type="button" id="downloadStlBtn" class="secondary-button">
+                Download .stl
+              </button>
+              <button type="button" id="downloadScadBtn" class="secondary-button">
+                Download .scad
+              </button>
+              <button type="button" id="copyScadBtn" class="ghost-button">
+                Copy Code
+              </button>
+            </div>
+          </form>
+
+          <p id="formMessage" class="form-message" aria-live="polite"></p>
+        </section>
+
+        <section class="panel preview-panel">
+          <div class="section-heading">
+            <h2>Live Preview</h2>
+            <p>Top view of the ruler body and mark spacing.</p>
+          </div>
+
+          <div class="preview-stage">
+            <svg
+              id="rulerPreview"
+              viewBox="0 0 1200 320"
+              role="img"
+              aria-labelledby="previewTitle previewDescription"
+            >
+              <title id="previewTitle">Ruler preview</title>
+              <desc id="previewDescription">
+                A preview of the generated ruler with metric marks.
+              </desc>
+            </svg>
+          </div>
+
+          <div class="metric-grid">
+            <article class="metric-card">
+              <p class="metric-label">Print Size</p>
+              <strong id="printSizeValue">200 x 30 x 4 mm</strong>
+            </article>
+
+            <article class="metric-card">
+              <p class="metric-label">Marked Range</p>
+              <strong id="rangeValue">0 to 20 cm</strong>
+            </article>
+
+            <article class="metric-card">
+              <p class="metric-label">Total Marks</p>
+              <strong id="markCountValue">41</strong>
+            </article>
+
+            <article class="metric-card">
+              <p class="metric-label">Corner Radius</p>
+              <strong id="cornerValue">5 mm</strong>
+            </article>
+
+            <article class="metric-card">
+              <p class="metric-label">Number Rise</p>
+              <strong id="labelRiseValue">2 mm raised</strong>
+            </article>
+
+            <article class="metric-card">
+              <p class="metric-label">Body Depth</p>
+              <strong id="bodyDepthValue">4 mm body</strong>
+            </article>
+          </div>
+
+          <p id="previewNote" class="preview-note"></p>
+        </section>
+      </section>
+
+      <section class="panel code-panel">
+        <div class="section-heading">
+          <h2>OpenSCAD Output</h2>
+          <p>
+            Use the STL button for a ready-to-slice mesh, or keep this code if
+            you want an editable OpenSCAD version.
+          </p>
+        </div>
+
+        <textarea id="scadOutput" readonly spellcheck="false"></textarea>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
